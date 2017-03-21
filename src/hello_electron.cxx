@@ -1,8 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "electron.h"
 
-float Electron::step = 0.001;
-
 int main() {
     // main window
     sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode()),
@@ -28,6 +26,8 @@ int main() {
         window.draw(e->get());  // render electron
         window.display();       // show frame
     }
+
+    delete e;
 
     return 0;
 }

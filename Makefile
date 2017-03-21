@@ -10,15 +10,16 @@ SRC = $(wildcard $(SRC_DIR)/*.cxx)
 OBJ = $(SRC:$(SRC_DIR)/%.cxx=$(OBJ_DIR)/%.o)
 
 # compiler options
-CXX = g++
+CXX = g++ -std=c++11
 CXXFLAGS = -I $(INC_DIR) -lsfml-graphics -lsfml-window -lsfml-system
 
 # binary files
-BIN = $(BIN_DIR)/hello_world $(BIN_DIR)/hello_electron
+BIN = $(BIN_DIR)/hello_world $(BIN_DIR)/hello_electron $(BIN_DIR)/hello_atom
 
 # dependencies
 $(BIN_DIR)/hello_world.dep = hello_world.o
 $(BIN_DIR)/hello_electron.dep = hello_electron.o
+$(BIN_DIR)/hello_atom.dep = hello_atom.o atom.o
 
 # makes
 all: init $(OBJ) $(BIN)
@@ -44,6 +45,12 @@ init:
 	
 # remove binaries
 clean:
+	@echo -ne 'Removing \033[1m$(BIN)\033[0m...'
+	@rm -f $(BIN)
+	@echo ' done'
+
+# remove all
+distclean:
 	@echo -ne 'Removing \033[1m$(OBJ) $(BIN)\033[0m...'
 	@rm -f $(OBJ) $(BIN)
 	@echo ' done'
