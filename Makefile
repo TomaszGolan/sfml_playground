@@ -14,12 +14,13 @@ CXX = g++
 CXXFLAGS = -I $(INC_DIR) -lsfml-graphics -lsfml-window -lsfml-system
 
 # binary files
-BIN = $(BIN_DIR)/hello_world
+BIN = $(BIN_DIR)/hello_world $(BIN_DIR)/hello_electron
 
 # dependencies
 $(BIN_DIR)/hello_world.dep = hello_world.o
+$(BIN_DIR)/hello_electron.dep = hello_electron.o
 
-# make all
+# makes
 all: init $(OBJ) $(BIN)
 
 # compiling

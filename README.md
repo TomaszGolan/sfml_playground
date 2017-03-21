@@ -7,3 +7,4 @@
 3. Available programs:
     
     * **hello_world** - rotate a rectangle with a mouse wheel
+    * **hello_electron** - just a circle moving around a circle
