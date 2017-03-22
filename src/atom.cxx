@@ -1,12 +1,10 @@
 #include "atom.h"
 #include <random>
+#include "colors.h"
 
 int Atom::max_orbits = 5;
 int Atom::orbit_size[] = {2, 8, 18, 32, 50};
 int Atom::orbit_sums[] = {2, 10, 28, 60, 110};
-sf::Color Atom::colors[] = {sf::Color(255, 255, 157), sf::Color(190, 235, 159),
-                            sf::Color(121, 189, 143), sf::Color(0, 163, 136),
-                            sf::Color(0, 99, 83),     sf::Color(255, 97, 56)};
 
 Atom::Atom(const unsigned int Z, const float R, const sf::Vector2f center)
     : Z(Z) {
@@ -18,7 +16,7 @@ Atom::Atom(const unsigned int Z, const float R, const sf::Vector2f center)
     nucleus = new sf::CircleShape(nucleus_radius, 64);
     nucleus->setOrigin(nucleus_radius, nucleus_radius);
     nucleus->setPosition(center);
-    nucleus->setFillColor(colors[max_orbits]);
+    nucleus->setFillColor(colors::orange);
 
     int nof_electrons = Z;
     int current_orbit = 0;
@@ -55,7 +53,7 @@ void Atom::fill_orbit(const int N, const int orbit_id) {
         Electron* e = new Electron(electron_r, R, nucleus->getPosition(),
                                    initial_angle + i * angle_step,
                                    direction / (orbit_id + 1.));
-        e->set_color(colors[orbit_id]);
+        e->set_color(colors::electrons[orbit_id]);
         electrons.push_back(e);
     }
 }

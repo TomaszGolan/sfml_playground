@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "atom.h"
 #include "elements.h"
+#include "colors.h"
 
 // draw nucleus and all electrons
 void draw(Atom *atom, sf::RenderWindow &window);
@@ -10,7 +11,7 @@ void center_origin(sf::Text &text);
 void bottom_origin(sf::Text &text);
 
 int main() {
-    int Z = 8;  // initial atomic number
+    int Z = 47;  // initial atomic number
 
     // main window
     sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode()),
@@ -42,8 +43,7 @@ int main() {
             sf::Text("up/down - switch elements, q - quit\n", font, radius / 6);
         bottom_origin(help);
         help.setPosition(window.getSize().x / 2, window.getSize().y);
-        sf::Color temp(255, 255, 255, 50);
-        help.setColor(temp);
+        help.setColor(colors::grey);
     }
 
     // repeat until closed

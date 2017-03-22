@@ -49,7 +49,6 @@ class Atom {
     static int max_orbits;      //!< the number of available orbits
     static int orbit_size[];    //!< the number of electrons on each orbit
     static int orbit_sums[];    //!< the sum of all electrons n first orbits
-    static sf::Color colors[];  //!< a few color for different orbitals
 
     //! get the number of orbits for this atom
     int nof_orbits();
