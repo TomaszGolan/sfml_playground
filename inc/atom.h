@@ -35,11 +35,15 @@ class Atom {
     //! get a nucleus
     inline sf::CircleShape get_nucleus() { return *nucleus; }
 
-    // private:
+    //! get electrons
+    inline const std::vector<Electron *> &get_electrons() const {
+        return electrons;
+    }
+
+   private:
     const int Z;  //!< atomic number
 
-    sf::CircleShape *nucleus;  //!< the nucleus of an atom
-
+    sf::CircleShape *nucleus;           //!< the nucleus of an atom
     std::vector<Electron *> electrons;  //!< electrons moving around nucleus
 
     static int max_orbits;      //!< the number of available orbits

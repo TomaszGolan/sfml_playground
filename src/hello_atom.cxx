@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include <cassert>
 #include <iostream>
 #include "atom.h"
+#include "elements.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     // require one argument
     if (argc != 2) {
         std::cout << "usage: hello_atom [atomic number]\n";
@@ -10,6 +12,8 @@ int main(int argc, char* argv[]) {
     }
 
     unsigned int Z = atoi(argv[1]);  // number of protons
+
+    assert(Z <= 110 and Z > 0);  // make sure atomic number is within the limit
 
     // main window
     sf::RenderWindow window(sf::VideoMode(sf::VideoMode::getDesktopMode()),
@@ -20,7 +24,24 @@ int main(int argc, char* argv[]) {
 
     // atom settings
     const float radius = window.getSize().y / 4;
-    Atom* atom = new Atom(Z, radius, center);
+    Atom atom(Z, radius, center);
+
+    // labels
+    sf::Font font;
+    sf::Text title, symbol;
+
+    // set labels only it font is properly loaded
+    if (font.loadFromFile("fonts/GlacialIndifference-Bold.otf")) {
+        title = sf::Text(elements::name[Z - 1], font, radius / 5);
+        symbol = sf::Text(elements::symbol[Z - 1], font,
+                          atom.get_nucleus().getRadius() * 0.6);
+        symbol.setColor(sf::Color::Black);
+        // center symbol
+        sf::FloatRect symbol_rect = symbol.getLocalBounds();
+        symbol.setOrigin(symbol_rect.left + symbol_rect.width / 2.0f,
+                         symbol_rect.top + symbol_rect.height / 2.0f);
+        symbol.setPosition(center);
+    }
 
     // repeat until closed
     while (window.isOpen()) {
@@ -30,16 +51,20 @@ int main(int argc, char* argv[]) {
             if (event.type == sf::Event::Closed) window.close();
         }
 
-        window.clear();                    // clear everything
-        atom->update();                    // update electrons positions
-        window.draw(atom->get_nucleus());  // render nucleus
+        window.clear();  // clear everything
+
+        window.draw(atom.get_nucleus());  // render nucleus
+
+        atom.update();  // update electrons positions
+
         // render electrons
-        for (Electron* e : atom->electrons) window.draw(e->get());
+        for (Electron *e : atom.get_electrons()) window.draw(e->get());
+
+        window.draw(title);   // render title
+        window.draw(symbol);  // render label
 
         window.display();  // show frame
     }
-
-    delete atom;
 
     return 0;
 }
